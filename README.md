@@ -14,10 +14,10 @@ Data will be stored on SQL through postgres.
 
 # Project Report
 
-* Extract
+Extract
 Project data is sourced from Kaggle.com. We worked with data from .csv files for USA Hospitals and US Household Income Statistics. The files were saved locally and the data was extracted into our Jupyter Notebook. 
 
-* Transform
+Transform
 We performed several transformations on both datasets in order to compare them based on the information we found the most relevant. 
 
 The data for both datasets is aggregated by Zip Code and both tables are compared based on this index. 
@@ -26,7 +26,7 @@ For the USA Hospitals dataset, we dropped the following columns; INSERT COLUMNS 
 
 For the US Household Income Statistics dataset, we dropped the following columns; INSERT COLUMNS DROPPED. We filtered on INSERT ORIGINAL COLUMNS NAMED. These columns were renamed to the following: INSERT NEW COLUMN NAMES. The dataset was cleaned by removing duplicates.
 
-* Load
+Load
 PostgreSQL was selected as our final production database because it offers totally integrated data storage and access, allowing us to perform complex queries while offering speed and security.
 
 The data was loaded into a database named ‘income_vs_healthcare’. The final tables storing the data are named ‘healthcare’ and ‘income.’
