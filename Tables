@@ -1,11 +1,18 @@
 CREATE TABLE healthcare (
+	Zip INT PRIMARY KEY,
+	State TEXT,
 	City TEXT,
-	Zip INT,
-	TYPE TEXT
+	Pop_100k INT,
+	Beds INT,
+	NAME TEXT,
+	Owner TEXT,
+	Care TEXT
 );
 
 CREATE TABLE income (
-	City TEXT,
-	Zip INT,
-	TYPE TEXT
+	Zip INT PRIMARY KEY,
+	Mean INT,
+	Median INT,
+	Households INT,
+	Stdev INT
 );
