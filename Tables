@@ -2,7 +2,7 @@ DROP TABLE healthcare;
 DROP TABLE income;
 
 CREATE TABLE healthcare (
-	"Hospital_id PRIMARY KEY"
+	"Hospital_id" INT PRIMARY KEY,
 	"Zip" INT,
 	"Us_State" TEXT,
 	"City" TEXT,
@@ -15,10 +15,10 @@ CREATE TABLE healthcare (
 );
 
 CREATE TABLE income (
-	id INT PRIMARY KEY,
-	Zip INT ,
-	Mean INT,
-	Median INT,
-	Households INT,
-	Stdev INT
+	"id" INT PRIMARY KEY,
+	"Zip" INT ,
+	"Mean" INT,
+	"Median" INT,
+	"Households" INT,
+	"Stdev" INT
 );
