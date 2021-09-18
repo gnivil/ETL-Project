@@ -1,0 +1,11 @@
+CREATE TABLE healthcare (
+	City TEXT,
+	Zip INT,
+	TYPE TEXT
+);
+
+CREATE TABLE income (
+	City TEXT,
+	Zip INT,
+	TYPE TEXT
+);
