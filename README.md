@@ -8,12 +8,13 @@ https://www.kaggle.com/goldenoakresearch/us-household-income-stats-geo-locations
 The data will be saved in .csv files and extracted from there. Significant transformations will be done to get the tables we want. 
 We plan to aggregate Zip codes and create or tables based on that. Data will be stored on SQL through PostgreSQL.
 
+-----
+
 # Project Report
 ETL Project - Technical Report
 Rich Kirschenheiter, Stefany Lima, Christian A. Reyes
 
-**Extract**
-
+## Extract
 Project data is sourced from Kaggle.com. We worked with data from .csv files for USA Hospitals and US Household Income Statistics. The files were saved locally and the data was extracted into our Jupyter Notebook using the Pandas read_csv() function. 
 
 Hospitals.csv: This dataset is provided by the Homeland Infrastructure Foundation-Level Data (HIFLD) without a license and for Public Use. HIFLD Open GP - Public Health. Shared By: jrayer_geoplatform. Data Source: services1.arcgis.com 
@@ -36,8 +37,7 @@ income_data_df = pd.read_csv(csv_file)
 income_data_df.head()
 ```
  
-**Transform** 
-
+## Transform
 We performed several transformations on both datasets in order to compare them. After reading in the csv files, we used the pandas.DataFrame.duplicated() function to check for duplicates within the hospital and the income data sets. After making sure they all read False, we started transforming the data. We did this to ensure the largest dataset possible was checked for duplicates before breaking it down. 
 ```python
 #check for duplicates in hospitals dataframe
@@ -48,8 +48,7 @@ hospital_data_df[mask]
 mask = income_data_df.duplicated()
 income_data_df[mask]
 ```
-
-*USA Hospitals*
+***USA Hospitals***
 
 This dataset originally had 34 columns, and our final table is reduced down to 10 columns. 
 * 11 columns dropped [“X”, “Y”, “ADDRESS”, “ZIP4”, “COUNTY”, “COUNTYFIPS”, “COUNTRY”, “LATITUDE”, “LONGITUDE”, “STATE_ID”] contained overly-specific geographical data that is not needed since the table is joined by Zip code. 
@@ -60,7 +59,6 @@ This dataset originally had 34 columns, and our final table is reduced down to 1
 hospital_cols = ["ID", "ZIP", "STATE", "CITY", "POPULATION", "BEDS", "NAME", "OWNER", "STATUS", "TYPE"]
 hospital_transformed = hospital_data_df[hospital_cols].copy()
 ```
- 
 The remaining columns were renamed to the following; "ID":"Hospital_id", "ZIP":"Zip", "STATE":"Us_State", "CITY":"City", "POPULATION":"Pop_100k", "BEDS":"Beds", "NAME":"Hospital_Name", "OWNER":"Type_Owner", "STATUS":"Status", "TYPE":"Care". We assigned variable hospital_cols to the list of columns we kept in our table containing hospital data. These columns were then set in a new dataframe named hospital_transfomred.
 * "Hospital_id": used as unique primary key
 * "Zip":column to join on between the two tables
@@ -87,8 +85,7 @@ hospital_transformed = hospital_transformed.rename(columns= {"ID":"Hospital_id",
 income_transformed = income_transformed.rename(columns= {"Zip_Code":"Zip",
                                                          "sum_w":"Households"})
 ```
-
-*US Household Income Statistics*
+***US Household Income Statistics***
 
 This dataset originally had 19 columns and our final table is reduced down to 6 columns. 
 * The following 13 columns - [“State_Code”, “State_Name”, “State_ab”, “County”, “City”, “Place”, “Type”, “Primary”, “Area_Code”, “ALand”, “AWater”, “Lat”, “Lon”] - were dropped since they contained geographical information redundant with the zip code. We set variable income_cols for these columns kept: ["id", "Zip_Code", "Mean", "Median", "Stdev", "sum_w"].
@@ -97,7 +94,6 @@ This dataset originally had 19 columns and our final table is reduced down to 6 
 income_cols = ["id", "Zip_Code", "Mean", "Median", "Stdev", "sum_w"]
 income_transformed = income_data_df[income_cols].copy()
 ```
-
 Only two of these columns were then renamed: "Zip_Code" to "Zip", "sum_w" to "Households".  We set variable income_cols for these columns kept: ["id", "Zip", "Mean", "Median", "Stdev", "Households"].
 * "id": used as unique primary key
 * "Zip": column to join on between the two tables
@@ -110,13 +106,11 @@ Only two of these columns were then renamed: "Zip_Code" to "Zip", "sum_w" to "Ho
 income_transformed = income_transformed.rename(columns= {"Zip_Code":"Zip",
                                                          "sum_w":"Households"})
 ```
-
 Upon reviewing the data, we uncovered locations of Hospitals for 50 US states and US territories of Puerto Rico(PR), Guam(GU), American Samoa(AS), Northern Mariana Islands(MP), Palau(PW), and Virgin Islands(VI). However, the income.csv only contained the income data for the 50 States and PR. We kept this data for future analysis when this data becomes available. We also determined that we could leave off the country column as the territories were listed under state as well. 
  
 The tables for both datasets are joined by Zip Code and both tables are compared based on this index. 
 
-**Load**
-
+## Load
 PostgreSQL was selected as our final production database because it offers totally integrated data storage and access, allowing us to perform complex queries while offering speed and security.
  
 The cleaned data was loaded into the database named ‘Income_vs_healthcare’ using the pandas .to_sql function. The final tables storing the data are named “healthcare” and “income”. The PRIMARY KEY in the "healthcare" table is "Hospital_id" and "id" in the “income” table. We found these unique identifiers were best suited to be PRIMARY KEYS, as they were unique to each table.
@@ -146,5 +140,6 @@ CREATE TABLE income (
 	"Stdev" INT
 );
 ~~~~
-
 We encountered errors loading the table columns onto the SQL table. We debugged by adding double quotation marks to the column names and ensured the column names did not have a corresponding sql function, such as STATE. We had to rename the columns several times in the Jupyter notebook before pgAdmin pulled them correctly.
+
+-----
