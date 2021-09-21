@@ -13,6 +13,7 @@ ETL Project - Technical Report
 Rich Kirschenheiter, Stefany Lima, Christian A. Reyes
 
 **Extract**
+
 Project data is sourced from Kaggle.com. We worked with data from .csv files for USA Hospitals and US Household Income Statistics. The files were saved locally and the data was extracted into our Jupyter Notebook using the Pandas read_csv() function. 
 
 Hospitals.csv: This dataset is provided by the Homeland Infrastructure Foundation-Level Data (HIFLD) without a license and for Public Use. HIFLD Open GP - Public Health. Shared By: jrayer_geoplatform. Data Source: services1.arcgis.com 
@@ -36,6 +37,7 @@ income_data_df.head()
 ```
  
 **Transform** 
+
 We performed several transformations on both datasets in order to compare them. After reading in the csv files, we used the pandas.DataFrame.duplicated() function to check for duplicates within the hospital and the income data sets. After making sure they all read False, we started transforming the data. We did this to ensure the largest dataset possible was checked for duplicates before breaking it down. 
 ```python
 #check for duplicates in hospitals dataframe
@@ -48,6 +50,7 @@ income_data_df[mask]
 ```
 
 *USA Hospitals*
+
 This dataset originally had 34 columns, and our final table is reduced down to 10 columns. 
 * 11 columns dropped [“X”, “Y”, “ADDRESS”, “ZIP4”, “COUNTY”, “COUNTYFIPS”, “COUNTRY”, “LATITUDE”, “LONGITUDE”, “STATE_ID”] contained overly-specific geographical data that is not needed since the table is joined by Zip code. 
 * 8 columns dropped [“WEBSITE”, “ALT_NAME”, “TTL_STAFF”, “TRAUMA”, “HELIPAD”, “TELEPHONE”, “NAICS_CODE”, NAICS_DESC”] contained hospital information beyond the scope of our analysis. 
@@ -86,6 +89,7 @@ income_transformed = income_transformed.rename(columns= {"Zip_Code":"Zip",
 ```
 
 *US Household Income Statistics*
+
 This dataset originally had 19 columns and our final table is reduced down to 6 columns. 
 * The following 13 columns - [“State_Code”, “State_Name”, “State_ab”, “County”, “City”, “Place”, “Type”, “Primary”, “Area_Code”, “ALand”, “AWater”, “Lat”, “Lon”] - were dropped since they contained geographical information redundant with the zip code. We set variable income_cols for these columns kept: ["id", "Zip_Code", "Mean", "Median", "Stdev", "sum_w"].
 ```python
@@ -112,9 +116,35 @@ Upon reviewing the data, we uncovered locations of Hospitals for 50 US states an
 The tables for both datasets are joined by Zip Code and both tables are compared based on this index. 
 
 **Load**
+
 PostgreSQL was selected as our final production database because it offers totally integrated data storage and access, allowing us to perform complex queries while offering speed and security.
  
 The cleaned data was loaded into the database named ‘Income_vs_healthcare’ using the pandas .to_sql function. The final tables storing the data are named “healthcare” and “income”. The PRIMARY KEY in the "healthcare" table is "Hospital_id" and "id" in the “income” table. We found these unique identifiers were best suited to be PRIMARY KEYS, as they were unique to each table.
- 
-We encountered errors loading the table columns onto the SQL table. We debugged by adding double quotation marks to the column names and ensured the column names did not have a corresponding sql function, such as STATE. We had to rename the columns several times in the Jupyter notebook before pgAdmin pulled them correctly.
+~~~~sql
+DROP TABLE healthcare;
+DROP TABLE income;
 
+CREATE TABLE healthcare (
+	"Hospital_id" INT PRIMARY KEY,
+	"Zip" INT,
+	"Us_State" TEXT,
+	"City" TEXT,
+	"Pop_100k" INT,
+	"Beds" INT,
+	"Hospital_Name" TEXT,
+	"Type_Owner" TEXT,
+	"Status" TEXT,
+	"Care" TEXT
+);
+
+CREATE TABLE income (
+	"id" INT PRIMARY KEY,
+	"Zip" INT ,
+	"Mean" INT,
+	"Median" INT,
+	"Households" INT,
+	"Stdev" INT
+);
+~~~~
+
+We encountered errors loading the table columns onto the SQL table. We debugged by adding double quotation marks to the column names and ensured the column names did not have a corresponding sql function, such as STATE. We had to rename the columns several times in the Jupyter notebook before pgAdmin pulled them correctly.
