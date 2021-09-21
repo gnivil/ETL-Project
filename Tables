@@ -1,0 +1,24 @@
+DROP TABLE healthcare;
+DROP TABLE income;
+
+CREATE TABLE healthcare (
+	"Hospital_id" INT PRIMARY KEY,
+	"Zip" INT,
+	"Us_State" TEXT,
+	"City" TEXT,
+	"Pop_100k" INT,
+	"Beds" INT,
+	"Hospital_Name" TEXT,
+	"Type_Owner" TEXT,
+	"Status" TEXT,
+	"Care" TEXT
+);
+
+CREATE TABLE income (
+	"id" INT PRIMARY KEY,
+	"Zip" INT ,
+	"Mean" INT,
+	"Median" INT,
+	"Households" INT,
+	"Stdev" INT
+);
