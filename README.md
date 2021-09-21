@@ -1,9 +1,13 @@
 ## ETL Project - Rich Kirschenheiter, Stefany Lima, Christian A. Reyes
 
 # Project Proposal
-We will be comparing hospital data to income data. We will be getting data from Kaggle, links below:
-https://www.kaggle.com/carlosaguayo/usa-hospitals
-https://www.kaggle.com/goldenoakresearch/us-household-income-stats-geo-locations?select=kaggle_income.csv
+We will be comparing hospital data to income data. We will be getting data from [Kaggle](kaggle.com) and analysing the following:
+
+[USA Hospitals]
+(https://www.kaggle.com/carlosaguayo/usa-hospitals)
+
+[US Household Income Statistics]
+(https://www.kaggle.com/goldenoakresearch/us-household-income-stats-geo-locations?select=kaggle_income.csv)
 
 The data will be saved in .csv files and extracted from there. Significant transformations will be done to get the tables we want. 
 We plan to aggregate Zip codes and create or tables based on that. Data will be stored on SQL through PostgreSQL.
@@ -16,9 +20,9 @@ We plan to aggregate Zip codes and create or tables based on that. Data will be 
 Project data is sourced from Kaggle.com. We worked with data from .csv files for USA Hospitals and US Household Income Statistics. The files were saved locally and the data was extracted into our Jupyter Notebook using the Pandas read_csv() function. 
 
 Hospitals.csv: This dataset is provided by the Homeland Infrastructure Foundation-Level Data (HIFLD) without a license and for Public Use. HIFLD Open GP - Public Health. Shared By: jrayer_geoplatform. Data Source: services1.arcgis.com 
-This dataset was downloaded on March 23, 2019 from:
-https://hifld-geoplatform.opendata.arcgis.com/datasets/a2817bf9632a43f5ad1c6b0c153b0fab_0
-income.csv: 2011-2015 ACS 5-Year Documentation was provided by the U.S. Census Reports. Retrieved August 2, 2017, from: https://www2.census.gov/programs-surveys/acs/summary_file/2015/data/5_year_by_state/
+This dataset was downloaded on March 23, 2019 at [this link](https://hifld-geoplatform.opendata.arcgis.com/datasets/a2817bf9632a43f5ad1c6b0c153b0fab_0)
+
+income.csv: 2011-2015 ACS 5-Year Documentation was provided by the U.S. Census Reports. Retrieved August 2, 2017, from [this link](https://www2.census.gov/programs-surveys/acs/summary_file/2015/data/5_year_by_state/)
 ```python
 #import dependacies
 import pandas as pd
