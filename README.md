@@ -3,11 +3,9 @@
 # Project Proposal
 We will be comparing hospital data to income data. We will be getting data from [Kaggle](kaggle.com) and analysing the following:
 
-[USA Hospitals]
-(https://www.kaggle.com/carlosaguayo/usa-hospitals)
+[USA Hospitals](https://www.kaggle.com/carlosaguayo/usa-hospitals)
 
-[US Household Income Statistics]
-(https://www.kaggle.com/goldenoakresearch/us-household-income-stats-geo-locations?select=kaggle_income.csv)
+[US Household Income Statistics](https://www.kaggle.com/goldenoakresearch/us-household-income-stats-geo-locations?select=kaggle_income.csv)
 
 The data will be saved in .csv files and extracted from there. Significant transformations will be done to get the tables we want. 
 We plan to aggregate Zip codes and create or tables based on that. Data will be stored on SQL through PostgreSQL.
@@ -20,9 +18,9 @@ We plan to aggregate Zip codes and create or tables based on that. Data will be 
 Project data is sourced from Kaggle.com. We worked with data from .csv files for USA Hospitals and US Household Income Statistics. The files were saved locally and the data was extracted into our Jupyter Notebook using the Pandas read_csv() function. 
 
 Hospitals.csv: This dataset is provided by the Homeland Infrastructure Foundation-Level Data (HIFLD) without a license and for Public Use. HIFLD Open GP - Public Health. Shared By: jrayer_geoplatform. Data Source: services1.arcgis.com 
-This dataset was downloaded on March 23, 2019 at [this link](https://hifld-geoplatform.opendata.arcgis.com/datasets/a2817bf9632a43f5ad1c6b0c153b0fab_0)
+This dataset was downloaded on March 23, 2019 at [this link](https://hifld-geoplatform.opendata.arcgis.com/datasets/a2817bf9632a43f5ad1c6b0c153b0fab_0).
 
-income.csv: 2011-2015 ACS 5-Year Documentation was provided by the U.S. Census Reports. Retrieved August 2, 2017, from [this link](https://www2.census.gov/programs-surveys/acs/summary_file/2015/data/5_year_by_state/)
+income.csv: 2011-2015 ACS 5-Year Documentation was provided by the U.S. Census Reports. Retrieved August 2, 2017, from [this link](https://www2.census.gov/programs-surveys/acs/summary_file/2015/data/5_year_by_state/).
 ```python
 #import dependacies
 import pandas as pd
@@ -50,7 +48,7 @@ hospital_data_df[mask]
 mask = income_data_df.duplicated()
 income_data_df[mask]
 ```
-***USA Hospitals***
+[***USA Hospitals***](https://github.com/gnivil/ETL-Project/blob/main/Resources/Hospitals.csv)
 
 This dataset originally had 34 columns, and our final table is reduced down to 10 columns. 
 * 11 columns dropped [“X”, “Y”, “ADDRESS”, “ZIP4”, “COUNTY”, “COUNTYFIPS”, “COUNTRY”, “LATITUDE”, “LONGITUDE”, “STATE_ID”] contained overly-specific geographical data that is not needed since the table is joined by Zip code. 
@@ -87,7 +85,7 @@ hospital_transformed = hospital_transformed.rename(columns= {"ID":"Hospital_id",
 income_transformed = income_transformed.rename(columns= {"Zip_Code":"Zip",
                                                          "sum_w":"Households"})
 ```
-***US Household Income Statistics***
+[***US Household Income Statistics***](https://github.com/gnivil/ETL-Project/blob/main/Resources/income.csv)
 
 This dataset originally had 19 columns and our final table is reduced down to 6 columns. 
 * The following 13 columns - [“State_Code”, “State_Name”, “State_ab”, “County”, “City”, “Place”, “Type”, “Primary”, “Area_Code”, “ALand”, “AWater”, “Lat”, “Lon”] - were dropped since they contained geographical information redundant with the zip code. We set variable income_cols for these columns kept: ["id", "Zip_Code", "Mean", "Median", "Stdev", "sum_w"].
