@@ -1,7 +1,7 @@
 ## ETL Project - Rich Kirschenheiter, Stefany Lima, Christian A. Reyes
 
 # Project Proposal
-We will be comparing hospital data to income data. We will be getting data from [Kaggle](kaggle.com) and analysing the following:
+We will be comparing hospital data to income data. We will be getting data from [Kaggle](kaggle.com) and analyzing the following:
 
 [USA Hospitals](https://www.kaggle.com/carlosaguayo/usa-hospitals)
 
@@ -141,5 +141,4 @@ CREATE TABLE income (
 );
 ~~~~
 We encountered errors loading the table columns onto the SQL table. We debugged by adding double quotation marks to the column names and ensured the column names did not have a corresponding sql function, such as STATE. We had to rename the columns several times in the Jupyter notebook before pgAdmin pulled them correctly.
-
 -----
