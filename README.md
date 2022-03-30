@@ -13,7 +13,6 @@ We plan to aggregate Zip codes and create or tables based on that. Data will be 
 -----
 
 # Project Report
-
 ## Extract
 Project data is sourced from Kaggle.com. We worked with data from .csv files for USA Hospitals and US Household Income Statistics. The files were saved locally and the data was extracted into our Jupyter Notebook using the Pandas read_csv() function. 
 
